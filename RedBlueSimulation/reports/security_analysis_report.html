@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Integrated Security Suite Analysis Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 1100px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1, h2, h3 { color: #1e3a8a; }
+        .header { border-bottom: 3px solid #1e3a8a; padding-bottom: 15px; margin-bottom: 25px; }
+        .section { margin-bottom: 40px; padding: 20px; border: 1px solid #e5e7eb; border-radius: 6px; }
+        .badge { display: inline-block; padding: 5px 10px; border-radius: 4px; font-weight: bold; color: white; }
+        .bg-red { background-color: #ef4444; }
+        .bg-green { background-color: #10b981; }
+        .bg-yellow { background-color: #f59e0b; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #e5e7eb; padding: 10px; text-align: left; }
+        th { background-color: #f3f4f6; }
+        pre { background-color: #1f2937; color: #10b981; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        .text-danger { color: #ef4444; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Security Suite Comprehensive Report</h1>
+            <p>Generated: Academic Internship Red/Blue Security Simulation Framework</p>
+        </div>
+
+        <div class="section">
+            <h2>1. Active Vulnerability Scanner Results</h2>
+            <h3>Exposed Files</h3>
+            <p>No exposed sensitive files detected.</p>
+            
+            
+
+            <h3>SQL Injection Identifications</h3>
+            <p>No SQL Injection points verified.</p>
+            
+            
+
+            <h3>Reflected XSS Identifications</h3>
+            <table><tr><th>Endpoint</th><th>Payload</th><th>Severity</th></tr>
+            <tr><td>http://127.0.0.1:5000/search</td><td><code><script>alert(1)</script></code></td><td><span class='badge bg-red'>High</span></td></tr><tr><td>http://127.0.0.1:5000/search</td><td><code><img src=x onerror=alert(1)></code></td><td><span class='badge bg-red'>High</span></td></tr><tr><td>http://127.0.0.1:5000/search</td><td><code><svg onload=alert(1)></code></td><td><span class='badge bg-red'>High</span></td></tr><tr><td>http://127.0.0.1:5000/search</td><td><code>javascript:alert(1)</code></td><td><span class='badge bg-red'>High</span></td></tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>2. Security Headers Analysis Score: 0/100</h2>
+            <table>
+                <tr>
+                    <th>Header</th>
+                    <th>Status</th>
+                    <th>Configured Value</th>
+                    <th>Impact Details</th>
+                </tr>
+                <tr><td>Content-Security-Policy</td><td><span class='badge bg-red'>Missing</span></td><td><code>N/A</code></td><td>CSP protects against XSS, clickjacking, and code injection attacks.</td></tr><tr><td>Strict-Transport-Security</td><td><span class='badge bg-red'>Missing</span></td><td><code>N/A</code></td><td>HSTS forces browsers to connect using secure HTTPS only.</td></tr><tr><td>X-Frame-Options</td><td><span class='badge bg-red'>Missing</span></td><td><code>N/A</code></td><td>Protects users against clickjacking attacks by controlling site nesting.</td></tr><tr><td>X-Content-Type-Options</td><td><span class='badge bg-red'>Missing</span></td><td><code>N/A</code></td><td>Prevents MIME-sniffing and forces matching resource content-types.</td></tr><tr><td>X-XSS-Protection</td><td><span class='badge bg-red'>Missing</span></td><td><code>N/A</code></td><td>Filters basic reflected XSS attacks in older browsers.</td></tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>3. Log Analyzer Metrics</h2>
+            <ul>
+                <li>SQL Injection Attempts Identified: <strong>1</strong></li>
+                <li>XSS Injection Attempts Identified: <strong>1</strong></li>
+                <li>Directory Traversal Attempts Identified: <strong>1</strong></li>
+            </ul>
+            <h3>Detailed Attack Log Entries</h3>
+            <table><tr><th>Line</th><th>Class</th><th>Log Content</th></tr>
+            <tr><td>10</td><td><span class='badge bg-yellow'>SQLi Attempt</span></td><td><code>192.168.1.15 - - [13/Jul/2026:10:02:40 +0530] "GET /search?q=%27+OR+1%3D1+-- HTTP/1.1" 500 892 "-" "Mozilla/5.0"</code></td></tr><tr><td>12</td><td><span class='badge bg-yellow'>Path Traversal</span></td><td><code>192.168.1.25 - - [13/Jul/2026:10:04:15 +0530] "GET /../../../../etc/passwd HTTP/1.1" 404 231 "-" "Mozilla/5.0"</code></td></tr><tr><td>13</td><td><span class='badge bg-yellow'>XSS Attempt</span></td><td><code>192.168.1.30 - - [13/Jul/2026:10:05:00 +0530] "GET /search?q=%3Cscript%3Ealert%281%29%3C%2Fscript%3E HTTP/1.1" 200 1450 "-" "Mozilla/5.0"</code></td></tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>4. Brute Force Intrusion Detection</h2>
+            <table><tr><th>Source IP Address</th><th>Failed Login Counts</th><th>Action Recommendation</th></tr>
+            <tr><td>192.168.1.45</td><td><code>6</code></td><td><span class='badge bg-red'>High (Potential Brute Force)</span></td></tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>5. Target URL Phishing Inspection Score: 125/100</h2>
+            <p>Verdict: <strong><span class="badge bg-red">SUSPICIOUS</span></strong></p>
+            <h3>Flags Triggered</h3>
+            <ul>
+                <li>Missing HTTPS protocol</li><li>Hostname is an IP address</li><li>Contains suspicious keyword: login</li><li>Contains suspicious keyword: secure</li><li>Contains suspicious keyword: update</li><li>Excessive number of subdomains (4)</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

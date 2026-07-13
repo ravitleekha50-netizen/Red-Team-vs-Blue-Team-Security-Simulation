@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card bg-dark text-white border {% if security_enabled %}border-primary{% else %}border-danger{% endif %} shadow-lg rounded-3 mb-4">
+            <div class="card-body p-5">
+                <h3 class="fw-bold mb-4">Feedback Bulletin</h3>
+                
+                <form action="{{ url_for('feedback') }}" method="POST">
+                    {% if security_enabled %}
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                    {% endif %}
+                    
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control bg-secondary text-white border-0" id="name" name="name" required autocomplete="off">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea class="form-control bg-secondary text-white border-0" id="message" name="message" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn {% if security_enabled %}btn-primary{% else %}btn-danger{% endif %} fw-bold">Submit Feedback</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="feedback-list">
+            <h4 class="mb-3">Recent Feedbacks</h4>
+            
+            {% if feedbacks %}
+                {% for item in feedbacks %}
+                <div class="card bg-dark text-white border-0 shadow mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="card-title fw-bold m-0">{{ item.name }}</h5>
+                            <span class="text-muted small">{{ item.created_at }}</span>
+                        </div>
+                        <p class="card-text">
+                            {% if security_enabled %}
+                            {{ item.message }}
+                            {% else %}
+                            {{ item.message | safe }}
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="p-5 text-center text-muted bg-dark rounded shadow">
+                    No feedbacks submitted yet.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

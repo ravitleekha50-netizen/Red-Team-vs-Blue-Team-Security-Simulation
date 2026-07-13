@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Internal Server Error - Traceback Dump</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ff5555;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 30px;
+        }
+        h1 {
+            color: #ffffff;
+            border-bottom: 2px solid #ff5555;
+            padding-bottom: 10px;
+        }
+        pre {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            color: #88ff88;
+            border: 1px solid #ff5555;
+        }
+        .warning {
+            color: #ffb86c;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>500 Internal Server Error</h1>
+    <div class="warning">FLASK DEBUG TRACEBACK DUMP (Security Misconfiguration Active)</div>
+    <pre>{{ traceback }}</pre>
+</body>
+</html>

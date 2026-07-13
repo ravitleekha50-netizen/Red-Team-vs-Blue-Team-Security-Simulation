@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card bg-dark text-white border {% if security_enabled %}border-primary{% else %}border-danger{% endif %} shadow-lg rounded-3 mb-4">
+            <div class="card-body p-5">
+                <h3 class="fw-bold mb-4">Catalog Search</h3>
+                
+                <form action="{{ url_for('search') }}" method="GET" class="row g-2">
+                    <div class="col-md-9">
+                        <input type="text" class="form-control bg-secondary text-white border-0 py-2" name="q" value="{{ query }}" placeholder="Search by name or username...">
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn {% if security_enabled %}btn-primary{% else %}btn-danger{% endif %} w-100 py-2 fw-bold">Search</button>
+                    </div>
+                </form>
+
+                {% if error %}
+                <div class="alert alert-danger mt-4" role="alert">
+                    <h5 class="alert-heading fw-bold">Database Query Error</h5>
+                    <pre class="m-0 text-white">{{ error }}</pre>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if query %}
+        <div class="mb-4">
+            <h4>
+                Search Results for: 
+                {% if security_enabled %}
+                <span class="text-primary">{{ query }}</span>
+                {% else %}
+                <span class="text-danger">{{ query | safe }}</span>
+                {% endif %}
+            </h4>
+        </div>
+        
+        <div class="card bg-dark text-white border-0 shadow-lg rounded-3">
+            <div class="card-body p-0">
+                {% if results %}
+                <div class="table-responsive">
+                    <table class="table table-dark table-striped table-hover m-0">
+                        <thead>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in results %}
+                            <tr>
+                                <td>{{ user.full_name }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.email }}</td>
+                                <td><span class="badge bg-secondary text-dark">{{ user.role }}</span></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="p-5 text-center text-muted">
+                    No results found in the catalog.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

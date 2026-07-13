@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card bg-dark text-white border {% if security_enabled %}border-primary{% else %}border-danger{% endif %} shadow-lg rounded-3">
+            <div class="card-body p-5">
+                <div class="d-flex align-items-center gap-4 mb-4">
+                    <div class="profile-avatar bg-secondary rounded-circle d-flex align-items-center justify-content-center fw-bold text-uppercase fs-2 text-white" style="width: 80px; height: 80px;">
+                        {{ user.username[:2] }}
+                    </div>
+                    <div>
+                        <h2 class="card-title fw-bold m-0">{{ user.full_name }}</h2>
+                        <span class="badge {% if user.role == 'administrator' %}bg-danger{% else %}bg-info{% endif %} text-dark fw-bold text-uppercase">{{ user.role }}</span>
+                    </div>
+                </div>
+                
+                <hr class="bg-secondary mb-4">
+                
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label class="text-muted small d-block">Account ID</label>
+                        <span class="fs-5 text-white">{{ user.id }}</span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="text-muted small d-block">Username</label>
+                        <span class="fs-5 text-white">{{ user.username }}</span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="text-muted small d-block">Email Address</label>
+                        <span class="fs-5 text-white">{{ user.email }}</span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="text-muted small d-block">System Role</label>
+                        <span class="fs-5 text-white">{{ user.role }}</span>
+                    </div>
+                </div>
+
+                {% if not security_enabled %}
+                <div class="alert alert-warning mt-4 border-warning bg-transparent" role="alert">
+                    <h5 class="alert-heading fw-bold">⚠️ IDOR Exposure Check</h5>
+                    <p class="m-0 small">Security is currently disabled. Try modifying the <code>?id=</code> parameter in the browser's address bar to view other profiles without authorization checks.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="jumbotron p-5 mb-4 text-white rounded-3 shadow header-slot">
+            <h1 class="display-4 fw-bold">Red Team vs Blue Team Security Simulation</h1>
+            <p class="lead">Welcome to the interactive security testing environment. This platform demonstrates critical web application vulnerabilities and their corresponding defensive mitigations.</p>
+            <hr class="my-4 bg-secondary">
+            <p>You can toggle between the <strong>Vulnerable Mode (Red Team)</strong> and the <strong>Secure Mode (Blue Team)</strong> using the controller in the navigation bar. Analyze how behavior changes under attack scenarios.</p>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4 g-4">
+    <div class="col-md-6">
+        <div class="card h-100 text-white shadow red-team-slot">
+            <div class="card-header bg-danger bg-opacity-25 text-danger fw-bold border-danger border-opacity-50">
+                🟥 RED TEAM (Attacker Perspective)
+            </div>
+            <div class="card-body bg-transparent">
+                <p>Observe and exploit weaknesses within the application. Key areas to inspect:</p>
+                <ul>
+                    <li><strong>SQL Injection:</strong> Inject payloads into the <em>Catalog Search</em> input to extract private database entries.</li>
+                    <li><strong>Cross-Site Scripting (XSS):</strong> Embed scripts inside the <em>Feedback</em> form to run arbitrary scripts.</li>
+                    <li><strong>IDOR:</strong> Manipulate user identifiers in the <em>Profile</em> URL to view accounts of other registered users.</li>
+                    <li><strong>Broken Authentication:</strong> Exploit missing rate limits or reverse weak password controls during login.</li>
+                    <li><strong>Security Misconfiguration:</strong> Inspect the public <em>Debug Panel</em> to extract server environmental secrets.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card h-100 text-white shadow blue-team-slot">
+            <div class="card-header bg-primary bg-opacity-25 text-primary fw-bold border-primary border-opacity-50">
+                🟦 BLUE TEAM (Defender Perspective)
+            </div>
+            <div class="card-body bg-transparent">
+                <p>Verify patches and review mitigations implemented when security controls are active:</p>
+                <ul>
+                    <li><strong>Prepared Statements:</strong> Prevents SQL injection attacks by binding query parameters.</li>
+                    <li><strong>Output Encoding:</strong> Escapes special tags in the template view block to render payloads as harmless text.</li>
+                    <li><strong>Access Validation:</strong> Enforces login checks and ownership matching before serving profile resources.</li>
+                    <li><strong>Bcrypt Password Hashing:</strong> Replaces weak checks with hashed password checks.</li>
+                    <li><strong>CSRF Token &amp; Headers:</strong> Rejects automated form submissions and injects defensive HTTP security headers.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

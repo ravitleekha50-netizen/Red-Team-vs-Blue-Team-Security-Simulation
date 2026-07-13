@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card bg-dark text-white border border-warning shadow-lg rounded-3 mb-4">
+            <div class="card-header bg-warning text-dark fw-bold">
+                ⚠️ SYSTEM DEBUG DIAGNOSTICS (Sensitive Data Exposure)
+            </div>
+            <div class="card-body p-5">
+                <p>This panel outputs active Flask configuration details and environment variables. In a production system, exposing these values represents a critical security risk.</p>
+                
+                <div class="table-responsive">
+                    <table class="table table-dark table-striped m-0">
+                        <thead>
+                            <tr>
+                                <th>Configuration Variable</th>
+                                <th>Configured Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for key, val in info.items() %}
+                            <tr>
+                                <td><code class="text-info">{{ key }}</code></td>
+                                <td><code class="text-warning">{{ val }}</code></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

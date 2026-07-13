@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card text-white shadow-lg rounded-3 login-card-slot">
+            <div class="card-body p-5 bg-transparent">
+                
+                <ul class="nav nav-tabs auth-tabs justify-content-center" id="authTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link {% if active_tab == 'login' or not active_tab %}active{% endif %}" id="login-tab" data-bs-toggle="tab" data-bs-target="#login-pane" type="button" role="tab">Sign In</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link {% if active_tab == 'register' %}active{% endif %}" id="register-tab" data-bs-toggle="tab" data-bs-target="#register-pane" type="button" role="tab">Register</button>
+                    </li>
+                </ul>
+
+                {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+                {% endif %}
+
+                {% if success %}
+                <div class="alert alert-success" role="alert">
+                    {{ success }}
+                </div>
+                {% endif %}
+
+                <div class="tab-content mt-4" id="authTabContent">
+                    <div class="tab-pane fade {% if active_tab == 'login' or not active_tab %}show active{% endif %}" id="login-pane" role="tabpanel">
+                        <form action="{{ url_for('login') }}" method="POST">
+                            <div class="mb-3">
+                                <label for="username" class="form-label text-white">Username</label>
+                                <input type="text" class="form-control bg-secondary bg-opacity-25 text-white border-secondary" id="username" name="username" required autocomplete="off">
+                            </div>
+                            <div class="mb-4">
+                                <label for="password" class="form-label text-white">Password</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control bg-secondary bg-opacity-25 text-white border-secondary" id="password" name="password" required>
+                                    <button class="btn btn-outline-secondary" type="button" id="toggle-password">👁️</button>
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn {% if security_enabled %}btn-primary{% else %}btn-danger{% endif %} py-2 fw-bold">Login</button>
+                            </div>
+                        </form>
+
+                        <div class="mt-4 text-center text-muted">
+                            <p class="small mb-1 text-white-50">Demo Credentials:</p>
+                            <code class="text-warning">admin / admin123</code><br>
+                            <code class="text-warning">john_doe / password123</code>
+                            {% if security_enabled %}
+                            <div class="mt-3 p-2 bg-primary bg-opacity-10 rounded border border-primary border-opacity-25">
+                                <small class="text-info d-block">🔒 Brute Force Protection Active</small>
+                                <small class="text-white-50">Accounts lock for 30s after 3 failed attempts.</small>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade {% if active_tab == 'register' %}show active{% endif %}" id="register-pane" role="tabpanel">
+                        <form action="{{ url_for('register') }}" method="POST">
+                            <div class="mb-3">
+                                <label for="reg-username" class="form-label text-white">Username</label>
+                                <input type="text" class="form-control bg-secondary bg-opacity-25 text-white border-secondary" id="reg-username" name="username" required autocomplete="off">
+                            </div>
+                            <div class="mb-3">
+                                <label for="reg-fullname" class="form-label text-white">Full Name</label>
+                                <input type="text" class="form-control bg-secondary bg-opacity-25 text-white border-secondary" id="reg-fullname" name="full_name" required autocomplete="off">
+                            </div>
+                            <div class="mb-3">
+                                <label for="reg-email" class="form-label text-white">Email Address</label>
+                                <input type="email" class="form-control bg-secondary bg-opacity-25 text-white border-secondary" id="reg-email" name="email" required autocomplete="off">
+                            </div>
+                            <div class="mb-3">
+                                <label for="reg-password" class="form-label text-white">Password</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control bg-secondary bg-opacity-25 text-white border-secondary" id="reg-password" name="password" required>
+                                    <button class="btn btn-outline-secondary" type="button" id="toggle-reg-password">👁️</button>
+                                </div>
+                            </div>
+                            
+                            {% if security_enabled %}
+                            <div class="mb-4 p-2 bg-primary bg-opacity-10 rounded border border-primary border-opacity-25">
+                                <small class="text-info d-block">🔒 Security Policy Enforced</small>
+                                <small class="text-white-50 d-block">- Minimum 8 characters</small>
+                                <small class="text-white-50 d-block">- Must include uppercase &amp; lowercase letters</small>
+                                <small class="text-white-50 d-block">- Must include at least 1 digit &amp; 1 symbol</small>
+                            </div>
+                            {% else %}
+                            <div class="mb-4 p-2 bg-danger bg-opacity-10 rounded border border-danger border-opacity-25">
+                                <small class="text-warning d-block">⚠️ Insecure Storage Active</small>
+                                <small class="text-white-50">No complexity checks. Password saved in plaintext.</small>
+                            </div>
+                            {% endif %}
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn {% if security_enabled %}btn-primary{% else %}btn-danger{% endif %} py-2 fw-bold">Register Account</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
